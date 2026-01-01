@@ -6,13 +6,6 @@
   --glass-dark: rgba(15, 23, 42, 0.75);
 }
 
-/* Optimasi Dasar */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Navbar Glassmorphism */
 #navbar.scrolled {
   background: var(--glass);
   backdrop-filter: blur(20px);
@@ -28,8 +21,7 @@ body {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Animasi Link Navigasi */
-.nav-link {
+  .nav-link {
   position: relative;
 }
 
@@ -50,7 +42,6 @@ body {
   width: calc(100% - 2rem);
 }
 
-/* Scrollbar Kustom */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -107,12 +98,10 @@ body {
   pointer-events: none;
 }
 
-/* Efek Tombol bmi*/
 #calc-bmi-btn:hover {
   box-shadow: 0 20px 40px var(--primary-glow);
 }
 
-/* Transisi Global */
 .transition-all-custom {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -137,7 +126,7 @@ textarea:focus {
   box-shadow: 0 0 0 4px var(--primary-glow) !important;
 }
 
-/* Animasi Saat Scroll*/
+/* Animasi Scroll*/
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -149,7 +138,7 @@ textarea:focus {
   transform: translateY(0);
 }
 
-/* Simulasi Loading Shimmer */
+/* Loading Shimmer */
 @keyframes shimmer {
   0% {
     background-position: -468px 0;

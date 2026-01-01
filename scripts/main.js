@@ -24,18 +24,9 @@ $(function () {
 
   // Status Operasional Klinik Real-time
   function perbaruiStatusKlinik() {
-    const sekarang = new Date();
-    const jam = sekarang.getHours();
-    const menit = sekarang.getMinutes();
-    const waktuSekarang = jam + menit / 60;
-
-    const jamBuka = 8.0;
-    const jamTutup = 21.0;
-
-    const isOpen = waktuSekarang >= jamBuka && waktuSekarang < jamTutup;
-    const teksStatus = isOpen ? "Klinik Sedang Buka" : "Klinik Sedang Tutup";
-    const warnaDot = isOpen ? "bg-green-500" : "bg-red-500";
-    const teksBadge = isOpen ? "OPEN" : "CLOSED";
+    const teksStatus = "Klinik Buka 24 Jam";
+    const warnaDot = "bg-green-500";
+    const teksBadge = "OPEN";
 
     $("#status-text").text(teksStatus);
     $("#status-dot").attr(
@@ -169,25 +160,27 @@ $(function () {
     }
   });
 
-  // Pendaftaran Janji Temu
+  // Pendaftaran Booking
   $("#final-apt-form").submit(function (e) {
     e.preventDefault();
 
     const name = $("#apt-user").val();
     const phone = $("#apt-phone").val();
     const category = $("#apt-cat option:selected").text();
+    const detail = $("#apt-detail").val();
     const date = $("#apt-date").val();
     const message = $("#apt-msg").val();
 
     const waText =
-      `Halo Lumina Health, saya *${name}* ingin melakukan janji temu:%0A%0A` +
-      `🏥 *Poli:* ${category}%0A` +
+      `Halo Prisdhy Clinic, saya *${name}* ingin melakukan booking:%0A%0A` +
+      `🏥 *Poli/Layanan:* ${category}%0A` +
+      (detail ? `✨ *Layanan Spesifik:* ${detail}%0A` : "") +
       `📅 *Tanggal:* ${date}%0A` +
       `📱 *WhatsApp:* ${phone}%0A` +
-      `📝 *Keluhan:* ${message || "-"}%0A%0A` +
+      `📝 *Catatan:* ${message || "-"}%0A%0A` +
       `Mohon segera dikonfirmasi. Terima kasih.`;
 
-    const waLink = `https://wa.me/628563574966?text=${waText}`;
+    const waLink = `https://wa.me/6281553148979?text=${waText}`;
 
     $("#apt-loader").removeClass("hidden").addClass("flex");
 
@@ -200,9 +193,9 @@ $(function () {
                     <div class="w-32 h-32 bg-green-50 dark:bg-green-500/10 text-green-500 rounded-full flex items-center justify-center text-6xl mx-auto mb-10 shadow-inner">
                         <i class="fas fa-paper-plane animate-bounce"></i>
                     </div>
-                    <h3 class="text-4xl font-black mb-6 dark:text-white">Mengalihkan ke WhatsApp...</h3>
+                    <h3 class="text-4xl font-black mb-6 dark:text-white">Booking Terkirim!</h3>
                     <p class="text-slate-500 dark:text-slate-400 text-xl leading-relaxed mb-10">
-                        Permintaan Anda sedang dikirim ke WhatsApp resmi kami. Mohon cek jendela browser Anda.
+                        Permintaan booking Anda sedang diteruskan ke WhatsApp resmi kami. Mohon selesaikan pesan di sana.
                     </p>
                     <button class="modal-cls-btn px-12 py-5 bg-primary-light text-white rounded-[2rem] font-black text-xl shadow-2xl shadow-primary-light/30 transition-all hover:scale-105 active:scale-95">
                         Selesai
@@ -313,11 +306,17 @@ $(function () {
     setTimeout(() => circle.remove(), 600);
   });
 
-  // Auto-pilih Layanan/Dokter
+  // Auto fill Layanan/Dokter
   $(document).on("click", "[data-service]", function () {
     const service = $(this).data("service");
+    const detail = $(this).data("detail");
     if (service) {
       $("#apt-cat").val(service).change();
+    }
+    if (detail) {
+      $("#apt-detail").val(detail);
+    } else {
+      $("#apt-detail").val("");
     }
   });
 
@@ -329,7 +328,6 @@ $(function () {
 
   function updateCarousel() {
     const cardWidth = $(".testimonial-card").outerWidth(true);
-    const gap = 24;
     $track.css("transform", `translateX(-${currentIndex * cardWidth}px)`);
 
     $dots.removeClass("active");
@@ -340,7 +338,7 @@ $(function () {
     autoplayInterval = setInterval(() => {
       currentIndex = (currentIndex + 1) % $dots.length;
       updateCarousel();
-    }, 3000);
+    }, 4000);
   }
 
   $dots.on("click", function () {
@@ -350,7 +348,6 @@ $(function () {
     startAutoplay();
   });
 
-  // Pause saat hover
   $(".carousel-container")
     .on("mouseenter", () => clearInterval(autoplayInterval))
     .on("mouseleave", startAutoplay);
